@@ -1,0 +1,12 @@
+<div *ngIf="[pageType] == 'detailed'; else briefPage">
+  <p class="aboutdetailedtext">
+    - Calculator application which can process expressions <br> <br>
+    - Only integer operations are allowed <br> <br>
+    - Basic operations "+, -, *, /" are supported <br> <br>
+  </p>
+</div>
+<ng-template #briefPage>
+  <p class="aboutbrieftext">
+    Calculator application which can process expressions
+  </p>
+</ng-template>

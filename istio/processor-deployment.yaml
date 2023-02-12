@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: processor
+  namespace: <PROJECT>
+  labels:
+    app: processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: processor
+    spec:
+      containers:
+      - image: <CONTAINER>
+        name: processor-container
+        env:
+        - name: REDISURI
+          value: redis://redis:6379/0
+        - name: OPSERVICEHOST
+          value: "http://compositeop"
+        - name: OPSERVICEPORT
+          value: "8080"

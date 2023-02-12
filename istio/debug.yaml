@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debugclient
+  namespace: <PROJECT>
+  labels:
+    app: curl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curl    
+  template:
+    metadata:
+      labels:
+        app: curl         
+    spec:
+      containers:
+      - image: curlimages/curl
+        command: [ "/bin/sh", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]      
+        name: debug-container
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: private-registry

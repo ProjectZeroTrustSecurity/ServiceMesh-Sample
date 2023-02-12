@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: multiply
+  name: multiply
+  namespace: <PROJECT>
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: multiply:latest
+  runPolicy: Serial
+  source:
+    contextDir: microservices/calculator/basicop/multiply
+    git:
+      ref: master
+      uri: https://github.com/abalasu1/IBM-Private-Cloud.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: ./Dockerfile
+    type: Source

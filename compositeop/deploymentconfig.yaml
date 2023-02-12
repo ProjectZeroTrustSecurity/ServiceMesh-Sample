@@ -1,0 +1,57 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop
+  namespace: <PROJECT>
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: compositeop
+  strategy:
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: compositeop
+        deploymentconfig: compositeop
+    spec:
+      containers:
+      - image: <CONTAINER>
+        imagePullPolicy: Always
+        name: compositeop
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        env:
+        - name: VERSION
+          value: "v1"
+        - name: ADDURI
+          value: "http://add:8080/basicop/add"
+        - name: SUBURI
+          value: "http://subtract:8080/basicop/subtract"
+        - name: MULURI
+          value: "http://multiply:8080/basicop/multiply"
+        - name: DIVURI
+          value: "http://divide:8080/basicop/divide"
+
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - compositeop
+      from:
+        kind: ImageStreamTag
+        name: compositeop:latest
+        namespace: calculator
+    type: ImageChange
+  - type: ConfigChange

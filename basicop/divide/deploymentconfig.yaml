@@ -1,0 +1,45 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: divide
+  name: divide
+  namespace: <PROJECT>
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: divide
+  strategy:
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: divide
+        deploymentconfig: divide
+    spec:
+      containers:
+      - image: <CONTAINER>
+        imagePullPolicy: Always
+        name: divide
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - divide
+      from:
+        kind: ImageStreamTag
+        name: divide:latest
+        namespace: calculator
+    type: ImageChange
+  - type: ConfigChange

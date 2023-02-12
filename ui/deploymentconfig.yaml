@@ -1,0 +1,46 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: ui
+  name: ui
+  namespace: <PROJECT>
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: ui
+  strategy:
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: ui
+        deploymentconfig: ui
+    spec:
+      serviceAccountName: ui-sa
+      containers:
+      - image: <CONTAINER>
+        imagePullPolicy: Always
+        name: ui
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - ui
+      from:
+        kind: ImageStreamTag
+        name: ui:latest
+        namespace: calculator
+    type: ImageChange
+  - type: ConfigChange

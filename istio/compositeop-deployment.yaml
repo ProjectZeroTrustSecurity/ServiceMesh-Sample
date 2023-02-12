@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compositeop-v1
+  namespace: <PROJECT>
+  labels:
+    app: compositeop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compositeop
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: compositeop
+        version: v1
+    spec:
+      containers:
+      - image: <CONTAINER>
+        name: compositeop-container
+        env:
+        - name: VERSION
+          value: "v1"
+        - name: ADDURI
+          value: "http://add:8080/basicop/add"
+        - name: SUBURI
+          value: "http://subtract:8080/basicop/subtract"
+        - name: MULURI
+          value: "http://multiply:8080/basicop/multiply"
+        - name: DIVURI
+          value: "http://divide:8080/basicop/divide"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compositeop-v2
+  namespace: <PROJECT>
+  labels:
+    app: compositeop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compositeop
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: compositeop
+        version: v2
+    spec:
+      containers:
+      - image: <CONTAINER>
+        name: compositeop-container
+        env:
+        - name: VERSION
+          value: "v2"
+        - name: ADDURI
+          value: "http://add:8080/basicop/add"
+        - name: SUBURI
+          value: "http://subtract:8080/basicop/subtract"
+        - name: MULURI
+          value: "http://multiply:8080/basicop/multiply"
+        - name: DIVURI
+          value: "http://divide:8080/basicop/divide"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compositeop-v3
+  namespace: <PROJECT>
+  labels:
+    app: compositeop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compositeop
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: compositeop
+        version: v3
+    spec:
+      containers:
+      - image: <CONTAINER>
+        name: compositeop-container
+        env:
+        - name: VERSION
+          value: "v3"
+        - name: ADDURI
+          value: "http://add:8080/basicop/add"
+        - name: SUBURI
+          value: "http://subtract:8080/basicop/subtract"
+        - name: MULURI
+          value: "http://multiply:8080/basicop/multiply"
+        - name: DIVURI
+          value: "http://divide:8080/basicop/divide"

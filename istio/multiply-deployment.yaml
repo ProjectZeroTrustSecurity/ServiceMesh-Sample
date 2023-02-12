@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multiply
+  namespace: <PROJECT>
+  labels:
+    app: multiply
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multiply
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: multiply
+    spec:
+      containers:
+      - name: multiply
+        image: <CONTAINER>

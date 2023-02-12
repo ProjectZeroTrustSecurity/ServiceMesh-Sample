@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: add
+  name: add
+  namespace: <PROJECT>
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: add:latest
+  runPolicy: Serial
+  source:
+    contextDir: microservices/calculator/basicop/add
+    git:
+      ref: master
+      uri: <GITHUBREPO>
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: ./Dockerfile
+    type: Source

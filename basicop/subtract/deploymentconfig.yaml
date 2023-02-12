@@ -1,0 +1,45 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: subtract
+  name: subtract
+  namespace: <PROJECT>
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: subtract
+  strategy:
+    activeDeadlineSeconds: 21600
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: subtract
+        deploymentconfig: subtract
+    spec:
+      containers:
+      - image: <CONTAINER>
+        imagePullPolicy: Always
+        name: subtract
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+  test: false
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - subtract
+      from:
+        kind: ImageStreamTag
+        name: subtract:latest
+        namespace: calculator
+    type: ImageChange
+  - type: ConfigChange

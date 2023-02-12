@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: ui
+  name: ui
+  namespace: <PROJECT>
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: ui:latest
+  runPolicy: Serial
+  source:
+    contextDir: microservices/calculator/ui
+    git:
+      ref: master
+      uri: <GITHUBREPO>
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: ./Dockerfile
+    type: Source

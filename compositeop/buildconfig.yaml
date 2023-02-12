@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop
+  namespace: <PROJECT>
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: compositeop:latest
+  runPolicy: Serial
+  source:
+    contextDir: microservices/calculator/compositeop
+    git:
+      ref: master
+      uri: <GITHUBREPO>
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: ./Dockerfile
+    type: Source

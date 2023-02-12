@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: compositeop-ts3
+  namespace: <PROJECT>
+spec:
+  hosts:
+    - compositeop
+  http:
+  - match:
+    - headers:
+        version:
+          exact: v2
+    route:
+    - destination:
+        host: compositeop
+        subset: v2
+  - route:
+    - destination:
+        host: compositeop
+        subset: v1

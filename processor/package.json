@@ -1,0 +1,26 @@
+{
+  "name": "Expression_Processor",
+  "version": "1.0.0",
+  "description": "Evaluate Multiple Expressions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "*",
+    "body-parser": "*",
+    "chance": "*",
+    "cors": "*",
+    "express": "4.13.x",
+    "fresh": "^0.5.2",
+    "jsep": "*",
+    "mime": "^2.4.0",
+    "negotiator": "^0.6.1",
+    "redis": "*",
+    "request": "*",
+    "underscore": "*"
+  }
+}

@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: subtract
+  name: subtract
+  namespace: <PROJECT>
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: subtract:latest
+  runPolicy: Serial
+  source:
+    contextDir: microservices/calculator/basicop/subtract
+    git:
+      ref: master
+      uri: <GITHUBREPO>
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: ./Dockerfile
+    type: Source

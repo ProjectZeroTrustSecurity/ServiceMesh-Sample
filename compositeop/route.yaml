@@ -1,0 +1,89 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop-mean
+  namespace: <PROJECT>
+spec:
+  host: <DOMAIN>
+  path: /compositeop/mean
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: compositeop
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop-square
+  namespace: <PROJECT>
+spec:
+  host: <DOMAIN>
+  path: /compositeop/square
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: compositeop
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop-cube
+  namespace: <PROJECT>
+spec:
+  host: <DOMAIN>
+  path: /compositeop/cube
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: compositeop
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop-eval
+  namespace: <PROJECT>
+spec:
+  host: <DOMAIN>
+  path: /compositeop/eval
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: compositeop
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: compositeop
+  name: compositeop-evalrpnexpr
+  namespace: <PROJECT>
+spec:
+  host: <DOMAIN>
+  path: /compositeop/evalrpnexpr
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: compositeop
+    weight: 100
+  wildcardPolicy: None

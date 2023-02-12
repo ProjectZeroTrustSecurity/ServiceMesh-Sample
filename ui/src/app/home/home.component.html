@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="col">
+    <p>Awesome Calculator Application</p>
+  </div>
+  <div class="col">
+    <div class="expression-container">
+      <p>Expression</p>
+      <p>Result</p>                       
+    </div>    
+  </div>
+</div>
+<div class="container color-light" [@expressions]="expressions.length">
+  <div class="col">
+    <p class="sm">Enter expressions to process:</p>
+
+    <form class="generate-container">
+      <textarea rows="20" type="number" class="txt" name="item" placeholder='Enter set of expressions in JSON format' [ngModel]="exprtoprocess" (ngModelChange)="exprtoprocess = $event"></textarea> <br>
+      <input type="submit" class="btn" value="Submit ..." (click)="submitExpressions()"> 
+      <input type="submit"  class="btn" value="Clear ..." (click)="clearResults()">            
+    </form>       
+  </div>
+  <div class="col">
+    <div class="calculator-container" *ngFor="let expression of expressions; let i = index">
+      <div class="expression-container">
+        <span>{{expression.expr}}</span>
+        <span>{{expression.result}}</span>                       
+      </div>
+    </div>
+  </div>
+</div>

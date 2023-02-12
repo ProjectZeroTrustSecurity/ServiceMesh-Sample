@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: add
+  namespace: <PROJECT>
+  labels:
+    app: add
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: add
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: add
+    spec:
+      containers:
+      - name: add
+        image: <CONTAINER>

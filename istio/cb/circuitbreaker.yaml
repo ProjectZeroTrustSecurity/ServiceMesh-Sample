@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: compositeop-circuit-breaker
+  namespace: <PROJECT>
+spec:
+  host: compositeop
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 1
+      http:
+        http1MaxPendingRequests: 1
+        maxRequestsPerConnection: 1
+    outlierDetection:
+      consecutiveErrors: 1
+      interval: 1.000s
+      baseEjectionTime: 180.000s
+      maxEjectionPercent: 100

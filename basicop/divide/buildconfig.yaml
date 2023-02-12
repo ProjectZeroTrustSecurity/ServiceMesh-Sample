@@ -1,0 +1,23 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: divide
+  name: divide
+  namespace: <PROJECT>
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: divide:latest
+  runPolicy: Serial
+  source:
+    contextDir: microservices/calculator/basicop/divide
+    git:
+      ref: master
+      uri: https://github.com/abalasu1/IBM-Private-Cloud.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: ./Dockerfile
+    type: Source
